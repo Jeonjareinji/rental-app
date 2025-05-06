@@ -71,17 +71,17 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  // Path relatif terhadap file server.js di dist
-  const distPath = path.resolve(__dirname, '../client/public');
+  // Sesuaikan dengan struktur Docker
+  const distPath = path.resolve(__dirname, '../dist/public');
   
-  console.log('Static files path:', distPath); // Debugging
-  console.log('Directory contents:', fs.readdirSync(path.dirname(distPath)));
+  console.log('Static files path:', distPath);
+  console.log('Current directory contents:', fs.readdirSync(process.cwd()));
+  console.log('Dist contents:', fs.readdirSync(path.resolve(__dirname, '../dist')));
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
-      `Build directory missing. Expected at: ${distPath}\n` +
-      `Did you forget to run 'npm run build:client'?\n` +
-      `Current directory: ${process.cwd()}`
+      `Client build not found at: ${distPath}\n` +
+      `Available files: ${fs.readdirSync(path.dirname(distPath) || '/app')}`
     );
   }
 

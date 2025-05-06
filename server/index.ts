@@ -4,6 +4,7 @@ import path from 'path';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,6 +63,13 @@ app.use((req, res, next) => {
 
     res.status(status).json({ message });
     throw err;
+  });
+  
+  console.log({
+    __dirname, 
+    cwd: process.cwd(),
+    distExists: fs.existsSync('/app/dist'),
+    distContents: fs.readdirSync('/app/dist')
   });
   
   if (app.get("env") === "development") {
