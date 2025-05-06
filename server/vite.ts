@@ -5,8 +5,11 @@ import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
 import viteConfig from "../vite.config";
 import { nanoid } from "nanoid";
+import { fileURLToPath } from 'url';
 
 const viteLogger = createLogger();
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -68,18 +71,22 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  const distPath = path.resolve(import.meta.dirname, "public");
+  // Path relatif terhadap file server.js di dist
+  const distPath = path.resolve(__dirname, '../public');
+  
+  console.log('Static files path:', distPath); // Debugging
+  console.log('Directory contents:', fs.readdirSync(path.dirname(distPath)));
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`,
+      `Build directory missing. Expected at: ${distPath}\n` +
+      `Did you forget to run 'npm run build:client'?\n` +
+      `Current directory: ${process.cwd()}`
     );
   }
 
   app.use(express.static(distPath));
-
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+  app.use('*', (_, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
   });
 }
