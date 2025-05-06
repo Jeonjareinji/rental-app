@@ -24,6 +24,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -71,7 +76,7 @@ app.use((req, res, next) => {
     distExists: fs.existsSync('/app/dist'),
     distContents: fs.readdirSync('/app/dist')
   });
-  
+
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
