@@ -17,4 +17,4 @@ COPY --from=builder /app/server ./server
 COPY --from=builder /app/.env ./
 
 EXPOSE 5000
-CMD ["node", "server/index.js"]
+CMD ["node", "dist/index.js"]
