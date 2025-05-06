@@ -13,5 +13,10 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 
+pool.query('SELECT 1')
+  .then(() => console.log('✅ DB connected'))
+  .catch((err) => console.error('❌ DB connection error:', err));
+
+
 export const db = drizzle(pool, { schema });
 export { pool };

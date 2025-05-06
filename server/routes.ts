@@ -3,7 +3,6 @@ import { createServer, type Server } from "http";
 import { storage, AuthTokenPayload } from "./storage";
 import * as schema from "@shared/schema";
 import { z } from "zod";
-import { ZodError } from "zod-validation-error";
 import { db } from "@db";
 import { and, eq } from "drizzle-orm";
 

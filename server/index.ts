@@ -1,5 +1,13 @@
 import dotenv from 'dotenv';
-dotenv.config();
+
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
@@ -62,8 +70,10 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
 
-  const host = process.env.DB_HOST;
-  const port = Number(process.env.PORT);
+  const host = process.env.DB_HOST || '0.0.0.0'; // Tambahin fallback
+  const port = Number(process.env.PORT || 5000); // Default 5000 kalau ga ada di env
+  
+  console.log('DB URL:', process.env.DATABASE_URL);
 
   server.listen({
     host,  // Use the host from .env or default
