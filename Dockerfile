@@ -9,11 +9,11 @@ FROM node:18-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Copy hasil build client (dari Vite)
-COPY --from=builder /app/dist/public ./dist/public
+# Copy client build
+COPY --from=builder /app/client/dist/public ./dist/public
 
-# Copy hasil build server (dari esbuild)
-COPY --from=builder /app/dist/server/server.mjs ./dist/server.mjs
+# Copy server build
+COPY --from=builder /app/dist/server.mjs ./dist/server.mjs
 
 # Copy dependencies dan env
 COPY --from=builder /app/node_modules ./node_modules
