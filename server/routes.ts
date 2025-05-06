@@ -237,10 +237,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Properties routes
   app.get(`${apiPrefix}/properties`, async (req, res) => {
     try {
+      console.log('### Request query:', req.query);
+
       const location = req.query.location as string | undefined;
       const type = req.query.type as string | undefined;
       const minPriceStr = req.query.minPrice as string | undefined;
       const maxPriceStr = req.query.maxPrice as string | undefined;
+
+      console.log('### Parsed params:', { location, type, minPriceStr, maxPriceStr });
 
       const minPrice = minPriceStr ? parseInt(minPriceStr) : undefined;
       const maxPrice = maxPriceStr ? parseInt(maxPriceStr) : undefined;
@@ -251,6 +255,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         minPrice,
         maxPrice
       });
+
+      console.log('### Query result:', properties?.length ?? 'null');
 
       return res.status(200).json({ properties });
     } catch (error) {
