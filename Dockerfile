@@ -12,4 +12,4 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.env .env
 
-CMD ["node", "--experimental-vm-modules", "dist/server.mjs"]
+CMD ["node", "--experimental-vm-modules", "dist/server/server.mjs"]
