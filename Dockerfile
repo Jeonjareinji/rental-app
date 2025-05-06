@@ -20,6 +20,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.env .env
 
 ENV NODE_ENV=production
-EXPOSE 5010
+EXPOSE 5000
 
 CMD ["node", "--experimental-vm-modules", "server.mjs"]
