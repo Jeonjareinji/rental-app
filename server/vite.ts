@@ -72,7 +72,7 @@ export async function setupVite(app: Express, server: Server) {
 
 export function serveStatic(app: Express) {
   // Path relatif terhadap file server.js di dist
-  const distPath = path.resolve(__dirname, '../public');
+  const distPath = path.resolve(__dirname, '../client/public');
   
   console.log('Static files path:', distPath); // Debugging
   console.log('Directory contents:', fs.readdirSync(path.dirname(distPath)));
