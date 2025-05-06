@@ -17,9 +17,14 @@ console.log({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
-  password: typeof process.env.DB_PASSWORD, // Check type
+  password: process.env.DB_PASSWORD, // Check type
   database: process.env.DB_NAME
 });
+
+// Tambahkan validasi
+if (!process.env.DB_PASSWORD) {
+  throw new Error('DB_PASSWORD is not defined in environment variables');
+}
 
 pool.query('SELECT 1')
   .then(() => console.log('✅ DB connected'))

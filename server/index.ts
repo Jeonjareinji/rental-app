@@ -1,16 +1,23 @@
 import dotenv from 'dotenv';
-
 import { fileURLToPath } from 'url';
 import path from 'path';
+import express, { type Request, Response, NextFunction } from "express";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic, log } from "./vite";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+const envPath = path.resolve(process.cwd(), '.env');
+dotenv.config({ path: envPath });
 
-import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+console.log('DB Config:', {
+  host: process.env.DB_HOST,
+  password: process.env.DB_PASSWORD // Hapus typeof
+});
+
+console.log('Loading env from:', envPath);
+
 
 const app = express();
 app.use(express.json());
