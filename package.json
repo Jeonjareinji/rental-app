@@ -8,7 +8,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/public",
     "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/server/server.mjs",
-    "start": "NODE_ENV=production node dist/server.mjs",
+    "start": "NODE_ENV=production node dist/server/server.mjs",
     "check": "tsc --noEmit",
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
     "db:seed": "tsx db/seed.ts"
