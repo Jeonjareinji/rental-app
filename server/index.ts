@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+dotenv.config();
+
 const envPath = path.resolve(process.cwd(), '.env');
 dotenv.config({ path: envPath });
 
