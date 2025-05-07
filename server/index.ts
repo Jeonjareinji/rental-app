@@ -14,10 +14,12 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log('DB Config:', {
-  host: process.env.DB_HOST,
-  password: process.env.DB_PASSWORD // Hapus typeof
+console.log("Environment Variables:", {
+  PORT: process.env.PORT,
+  HOST: process.env.HOST,
+  DB_HOST: process.env.DB_HOST
 });
+
 
 console.log('Loading env from:', envPath);
 
@@ -27,9 +29,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const PORT = Number(process.env.PORT) || 5000;
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server listening on port ${PORT}`);
+const HOST = '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`Server running on http://${HOST}:${PORT}`);
 });
 
 app.use((req, res, next) => {
