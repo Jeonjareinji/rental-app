@@ -23,6 +23,9 @@ export function log(message: string, source = "express") {
 }
 
 export async function setupVite(app: Express, server: Server) {
+  const viteModule = await import('vite');
+  const { createServer: createViteServer } = viteModule;
+
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -49,13 +52,12 @@ export async function setupVite(app: Express, server: Server) {
 
     try {
       const clientTemplate = path.resolve(
-        import.meta.dirname,
+        __dirname,
         "..",
         "client",
         "index.html",
       );
 
-      // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
@@ -72,7 +74,7 @@ export async function setupVite(app: Express, server: Server) {
 
 export function serveStatic(app: Express) {
   // Sesuaikan dengan struktur Docker
-  const distPath = path.resolve(__dirname, '../dist/public');
+  const distPath = path.resolve(__dirname, '../client/dist/public');
   
   console.log('Static files path:', distPath);
   console.log('Current directory contents:', fs.readdirSync(process.cwd()));

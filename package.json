@@ -8,7 +8,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/public",
     "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/server.mjs",
-    "start": "NODE_ENV=production node dist/server.mjs",
+    "start": "cross-env NODE_ENV=production node dist/server.mjs",
     "check": "tsc --noEmit",
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
     "db:seed": "tsx db/seed.ts"
@@ -48,7 +48,7 @@
     "@tanstack/react-query": "^5.60.5",
     "@types/bcrypt": "^5.0.2",
     "@types/pg": "^8.12.0",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",

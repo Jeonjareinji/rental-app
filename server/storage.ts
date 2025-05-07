@@ -1,7 +1,7 @@
 import { db } from "@db";
 import * as schema from "@shared/schema";
 import { eq, and, or, desc, sql, like } from "drizzle-orm";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "homeFinderSecretKey";

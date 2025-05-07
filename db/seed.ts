@@ -3,7 +3,7 @@ dotenv.config();
 
 import { db } from "./index";
 import * as schema from "@shared/schema";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // Mock data for seeding
 async function seed() {
