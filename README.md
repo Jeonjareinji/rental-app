@@ -15,28 +15,32 @@ Aplikasi web untuk membantu pemilik properti memasarkan apartemen, rumah, atau k
   - Penyewa bisa mengirim pesan ke pemilik
   - Pesan tersimpan dalam database
 
+---
+
 ## 📦 Teknologi yang Digunakan
 
-| Layer       | Teknologi    |
-|-------------|--------------|
-| Backend     | ExpressJS    |
-| Frontend    | ReactJS      |
-| Styling     | TailwindCSS  |
-| Database    | PostgreSQL   |
-| Autentikasi | JWT          |
+| Layer          | Teknologi      |
+|----------------|----------------|
+| Backend        | ExpressJS      |
+| Frontend       | ReactJS        |
+| Styling        | TailwindCSS    |
+| Database       | PostgreSQL     |
+| Autentikasi    | JWT            |
+
+---
 
 ## 🚀 Menjalankan Aplikasi Secara Lokal
 
 ### 1. Clone Repositori
 
-``
+```
 git clone -b master https://github.com/Jeonjareinji/rental-app.git
 cd rental-app
 npm install
+```
 
-``
-### 2. Setup environment variables
-cat > .env << 'EOF'
+### 2. Setup ENV
+```
 DB_HOST=localhost
 DB_PORT=yourdbport
 DB_USER=yourusername
@@ -45,24 +49,28 @@ DB_NAME=yourdbname
 JWT_SECRET=yourjwtsecretname
 PORT=5000
 NODE_ENV=development
-EOF
+```
 
-``
-### 3. Setup database
+### 3. Menyiapkan Database
+Sebelum menjalankan migrasi dan seeding database, disarankan untuk membuat database terlebih dahulu menggunakan tools seperti pgAdmin
+```
 npx drizzle-kit generate
 npx drizzle-kit push
 npm run db:seed
+```
 
-``
-### 4. Jalankan aplikasi
+### 4. Menjalankan Aplikasi
+```
 npm run dev
+```
 
-``
-### 5. Sample Account
-Pemilik Properti (Owner)
-📧 Email: owner@example.com
-🔒 Password: password123
+### 5. Sample Akun
+- **Akun Pemilik Properti (Owner) :**
+  - Email: owner@example.com
+  - Password: password123
+- **Akun Penyewa (Tenant) :**
+  - Email: tenant@example.com
+  - Password: password123
 
-Penyewa (Tenant)
-📧 Email: tenant@example.com
-🔒 Password: password123
+
+
