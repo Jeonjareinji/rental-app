@@ -1,22 +1,24 @@
-FROM node:18-alpine
-
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-# Copy package files dulu buat install deps
 COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# Install deps pake npm ci (lebih aman & cepat buat production)
-RUN npm ci
+FROM node:18-alpine
+WORKDIR /app
+ENV NODE_ENV=production
 
-# Copy hasil build lokal
-COPY dist ./dist
+# Copy client build
+COPY --from=builder /app/client/dist/public ./dist/public
 
-# Copy public assets dari hasil build client
-COPY client/dist/public ./dist/public
+# Copy server build
+COPY --from=builder /app/dist/server.mjs ./dist/server.mjs
 
-ENV PORT=5000 \
-    HOST=0.0.0.0 \
-    NODE_ENV=production
+# Copy dependencies dan env
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.env .env
 
 EXPOSE 5000
+
 CMD ["node", "--experimental-vm-modules", "dist/server.mjs"]
