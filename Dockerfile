@@ -6,7 +6,7 @@ COPY . .
 RUN npm run build
 
 FROM node:18-alpine
-WORKDIR /app
+WORKDIR /app/dist
 
 # Copy client build
 COPY --from=builder /app/client/dist/public ./dist/public
@@ -18,7 +18,9 @@ COPY --from=builder /app/dist/server.mjs ./dist/server.mjs
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.env .env
 
-ENV NODE_ENV=production
+ENV PORT=5000 \
+    HOST=0.0.0.0 \
+    NODE_ENV=production
 
 EXPOSE 5000
 CMD ["node", "--experimental-vm-modules", "dist/server.mjs"]
