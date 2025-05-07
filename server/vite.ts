@@ -72,7 +72,7 @@ export async function setupVite(app: Express, server: Server) {
 
 export function serveStatic(app: Express) {
   // Sesuaikan dengan struktur Docker
-  const distPath = path.resolve(__dirname, '../client/dist/public');
+  const distPath = path.resolve(__dirname, '../dist/public');
   
   console.log('Static files path:', distPath);
   console.log('Current directory contents:', fs.readdirSync(process.cwd()));
