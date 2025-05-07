@@ -7,7 +7,6 @@ RUN npm run build
 
 FROM node:18-alpine
 WORKDIR /app
-ENV NODE_ENV=production
 
 # Copy client build
 COPY --from=builder /app/client/dist/public ./dist/public
