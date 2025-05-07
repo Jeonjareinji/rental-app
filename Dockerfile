@@ -1,26 +1,28 @@
-FROM node:18-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-
 FROM node:18-alpine
-WORKDIR /app/dist
 
-# Copy client build
-COPY --from=builder /app/client/dist/public ./dist/public
+# Buat direktori kerja
+WORKDIR /app
 
-# Copy server build
-COPY --from=builder /app/dist/server.mjs ./dist/server.mjs
+# Salin env dulu supaya cache lebih stabil
+COPY ./.env ./.env
 
-# Copy dependencies dan env
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.env .env
+# Salin dist backend (hasil build server)
+COPY ./dist ./dist
 
+# Salin public client build ke dalam dist/public
+COPY ./client/dist/public ./dist/public
+
+# Salin dependency list dan install
+COPY package*.json ./
+RUN npm install --production
+
+# Set environment variables
 ENV PORT=5000 \
     HOST=0.0.0.0 \
     NODE_ENV=production
 
+# Expose port
 EXPOSE 5000
+
+# Jalankan backend
 CMD ["node", "--experimental-vm-modules", "dist/server.mjs"]
