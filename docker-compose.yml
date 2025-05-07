@@ -8,7 +8,7 @@ services:
     ports:
       - "5002:5000" 
     env_file:
-      - ./dist/.env
+      - .env
     restart: unless-stopped
     networks:
       - rental-network
