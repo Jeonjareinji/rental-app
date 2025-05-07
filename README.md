@@ -41,6 +41,7 @@ npm install
 
 ### 2. Setup ENV
 ```
+DATABASE_URL=postgresql://yourusername:yourpassword@localhost:yourdbport/yourdbname
 DB_HOST=localhost
 DB_PORT=yourdbport
 DB_USER=yourusername
