@@ -64,33 +64,33 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
-  const server = await registerRoutes(app);
+// (async () => {
+//   const server = await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+//   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+//     const status = err.status || err.statusCode || 500;
+//     const message = err.message || "Internal Server Error";
 
-    res.status(status).json({ message });
-    throw err;
-  });
+//     res.status(status).json({ message });
+//     throw err;
+//   });
 
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
+//   if (app.get("env") === "development") {
+//     await setupVite(app, server);
+//   } else {
+//     serveStatic(app);
+//   }
 
-  const host = process.env.DB_HOST || '0.0.0.0'; // Tambahin fallback
-  const port = Number(process.env.PORT); // Default 5000 kalau ga ada di env
+//   const host = process.env.DB_HOST || '0.0.0.0'; // Tambahin fallback
+//   const port = Number(process.env.PORT); // Default 5000 kalau ga ada di env
   
-  console.log('DB URL:', process.env.DATABASE_URL);
+//   console.log('DB URL:', process.env.DATABASE_URL);
 
-  server.listen({
-    host,  // Use the host from .env or default
-    port,
-    reusePort: true,
-  }, () => {
-    log(`Server running on http://${host}:${port}`);
-  });
-})();
+//   server.listen({
+//     host,  // Use the host from .env or default
+//     port,
+//     reusePort: true,
+//   }, () => {
+//     log(`Server running on http://${host}:${port}`);
+//   });
+// })();
