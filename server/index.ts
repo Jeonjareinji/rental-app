@@ -28,11 +28,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// const PORT = Number(process.env.PORT) || 5000;
-// const HOST = '0.0.0.0';
-// app.listen(PORT, HOST, () => {
-//   console.log(`Server running on http://${HOST}:${PORT}`);
-// });
+const PORT = Number(process.env.PORT) || 5000;
+const HOST = '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`Server running on http://${HOST}:${PORT}`);
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
