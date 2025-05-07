@@ -3,9 +3,6 @@ FROM node:18-alpine
 # Buat direktori kerja
 WORKDIR /app
 
-# Salin env dulu supaya cache lebih stabil
-COPY ./.env ./.env
-
 # Salin dist backend (hasil build server)
 COPY ./dist ./dist
 
