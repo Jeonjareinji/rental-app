@@ -1,4 +1,7 @@
 import dotenv from 'dotenv';
+const envPath = path.resolve(process.cwd(), '.env');
+dotenv.config({ path: envPath });
+
 import { fileURLToPath } from 'url';
 import path from 'path';
 import express, { type Request, Response, NextFunction } from "express";
@@ -8,9 +11,6 @@ import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const envPath = path.resolve(process.cwd(), '.env');
-dotenv.config({ path: envPath });
 
 console.log('DB Config:', {
   host: process.env.DB_HOST,
@@ -70,12 +70,12 @@ app.use((req, res, next) => {
     throw err;
   });
   
-  console.log({
-    __dirname, 
-    cwd: process.cwd(),
-    distExists: fs.existsSync('/app/dist'),
-    distContents: fs.readdirSync('/app/dist')
-  });
+  // console.log({
+  //   __dirname, 
+  //   cwd: process.cwd(),
+  //   distExists: fs.existsSync('/app/dist'),
+  //   distContents: fs.readdirSync('/app/dist')
+  // });
 
   if (app.get("env") === "development") {
     await setupVite(app, server);
