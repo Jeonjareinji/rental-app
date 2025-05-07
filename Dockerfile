@@ -1,23 +1,22 @@
 FROM node:18-alpine
 
-# Buat direktori kerja
 WORKDIR /app
 
-# Salin dist backend (hasil build server)
-COPY ./dist ./dist
+# Copy package files dulu buat install deps
+COPY package*.json ./
 
-# Salin public client build ke dalam dist/public
-COPY ./client/dist/public ./dist/public
+# Install deps pake npm ci (lebih aman & cepat buat production)
+RUN npm ci
 
-COPY ./node_modules ./node_modules
+# Copy hasil build lokal
+COPY dist ./dist
 
-# Set environment variables
+# Copy public assets dari hasil build client
+COPY client/dist/public ./dist/public
+
 ENV PORT=5000 \
     HOST=0.0.0.0 \
     NODE_ENV=production
 
-# Expose port
 EXPOSE 5000
-
-# Jalankan backend
 CMD ["node", "--experimental-vm-modules", "dist/server.mjs"]
