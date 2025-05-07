@@ -1,9 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const envPath = path.resolve(process.cwd(), '.env');
-dotenv.config({ path: envPath });
-
 import { fileURLToPath } from 'url';
 import path from 'path';
 import express, { type Request, Response, NextFunction } from "express";
@@ -14,25 +11,20 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const envPath = path.resolve(process.cwd(), '.env');
+dotenv.config({ path: envPath });
+
 console.log("Environment Variables:", {
   PORT: process.env.PORT,
   HOST: process.env.HOST,
   DB_HOST: process.env.DB_HOST
 });
 
-
 console.log('Loading env from:', envPath);
-
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-const PORT = Number(process.env.PORT) || 5000;
-const HOST = '0.0.0.0';
-app.listen(PORT, HOST, () => {
-  console.log(`Server running on http://${HOST}:${PORT}`);
-});
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -64,33 +56,30 @@ app.use((req, res, next) => {
   next();
 });
 
-// (async () => {
-//   const server = await registerRoutes(app);
+(async () => {
+  const server = await registerRoutes(app);
 
-//   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-//     const status = err.status || err.statusCode || 500;
-//     const message = err.message || "Internal Server Error";
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
 
-//     res.status(status).json({ message });
-//     throw err;
-//   });
+    res.status(status).json({ message });
+    throw err;
+  });
 
-//   if (app.get("env") === "development") {
-//     await setupVite(app, server);
-//   } else {
-//     serveStatic(app);
-//   }
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else {
+    serveStatic(app);
+  }
 
-//   const host = process.env.DB_HOST || '0.0.0.0'; // Tambahin fallback
-//   const port = Number(process.env.PORT); // Default 5000 kalau ga ada di env
+  const host = process.env.HOST || '0.0.0.0'; // Gunakan HOST bukan DB_HOST
+  const port = Number(process.env.PORT) || 5000;
   
-//   console.log('DB URL:', process.env.DATABASE_URL);
+  console.log('DB URL:', process.env.DATABASE_URL);
 
-//   server.listen({
-//     host,  // Use the host from .env or default
-//     port,
-//     reusePort: true,
-//   }, () => {
-//     log(`Server running on http://${host}:${port}`);
-//   });
-// })();
+  // Hanya listen sekali menggunakan server yang sudah diregister routes
+  server.listen(port, host, () => {
+    log(`Server running on http://${host}:${port}`);
+  });
+})();
