@@ -28,11 +28,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const PORT = Number(process.env.PORT) || 5000;
-const HOST = '0.0.0.0';
-app.listen(PORT, HOST, () => {
-  console.log(`Server running on http://${HOST}:${PORT}`);
-});
+// const PORT = Number(process.env.PORT) || 5000;
+// const HOST = '0.0.0.0';
+// app.listen(PORT, HOST, () => {
+//   console.log(`Server running on http://${HOST}:${PORT}`);
+// });
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -74,23 +74,12 @@ app.use((req, res, next) => {
     res.status(status).json({ message });
     throw err;
   });
-  
-  // console.log({
-  //   __dirname, 
-  //   cwd: process.cwd(),
-  //   distExists: fs.existsSync('/app/dist'),
-  //   distContents: fs.readdirSync('/app/dist')
-  // });
 
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
-
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
 
   const host = process.env.DB_HOST || '0.0.0.0'; // Tambahin fallback
   const port = Number(process.env.PORT); // Default 5000 kalau ga ada di env
