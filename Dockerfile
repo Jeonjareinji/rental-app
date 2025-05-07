@@ -12,9 +12,7 @@ COPY ./dist ./dist
 # Salin public client build ke dalam dist/public
 COPY ./client/dist/public ./dist/public
 
-# Salin dependency list dan install
-COPY package*.json ./
-RUN npm install --production
+COPY ./node_modules ./node_modules
 
 # Set environment variables
 ENV PORT=5000 \
