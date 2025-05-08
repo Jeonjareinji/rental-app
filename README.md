@@ -73,5 +73,47 @@ npm run dev
   - Email: tenant@example.com
   - Password: password123
 
+## 🚀 Menjalankan Aplikasi Secara Lokal dengan Docker (Opsional)
+
+#### Tools yang wajib di install terlebih dahulu :
+
+- Docker Dekstop
+
+### 1. Clone Repositori
+
+```
+git clone -b master https://github.com/Jeonjareinji/rental-app.git
+cd rental-app
+npm install
+```
+
+### 2. Setup ENV
+```
+DATABASE_URL=postgresql://yourusername:yourpassword@db:yourdbport/yourdbname (ubah localhost ke -> db)
+DB_HOST=localhost
+DB_PORT=yourdbport
+DB_USER=yourusername
+DB_PASSWORD=yourpassword
+DB_NAME=yourdbname
+JWT_SECRET=yourjwtsecretname
+PORT=5000
+NODE_ENV=development
+```
+
+### 3. Naikkan ke Docker
+```
+docker compose -f docker-compose.dev.yml up --build
+```
+
+### 4. Menyiapkan Database
+- Buka terminal baru lalu jalankan command di bawah :
+```
+docker exec -it rent-property-app-1 sh
+npx drizzle-kit generate
+npx drizzle-kit push
+npm run db:seed
+```
+
+- Sample Akun sama seperti di atas.
 
 
