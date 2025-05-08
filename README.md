@@ -64,8 +64,10 @@ npm run db:seed
 ```
 npm run dev
 ```
+### 5. Aplikasi sudah bisa di jalankan
+- Jalankan aplikasi di web dengan link http://localhost:5000
 
-### 5. Sample Akun
+### 6. Sample Akun
 - **Akun Pemilik Properti (Owner) :**
   - Email: owner@example.com
   - Password: password123
@@ -108,11 +110,21 @@ docker compose -f docker-compose.dev.yml up --build
 ### 4. Menyiapkan Database
 - Buka terminal baru lalu jalankan command di bawah :
 ```
-docker exec -it rent-property-app-1 sh
+docker-compose ps
+```
+- Lihat name image nya contoh (rent-app-app-1)
+```
+docker exec -it (name image kamu) sh
+```
+- Nanti masuk ke dalam image nya, jalanan command di bawah :
+```
 npx drizzle-kit generate
 npx drizzle-kit push
 npm run db:seed
 ```
+
+### 5. Aplikasi sudah bisa di jalankan
+- Jalankan aplikasi di web dengan link http://0.0.0.0:5000 atau http://yourIPaddress:5000
 
 - Sample Akun sama seperti di atas.
 
